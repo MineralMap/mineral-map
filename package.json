@@ -19,6 +19,7 @@
   "dependencies": {
     "@astrojs/react": "^3.6.2",
     "@astrojs/tailwind": "^5.1.2",
+    "@supabase/supabase-js": "^2.75.0",
     "astro": "^4.16.18",
     "clsx": "^2.1.1",
     "daisyui": "^4.12.22",

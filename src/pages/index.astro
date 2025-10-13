@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import MineralCard from '../components/MineralCard.astro';
+import SupabaseTest from '../components/SupabaseTest.tsx';
 
 const featuredMinerals = [
   {
@@ -49,6 +50,16 @@ const stats = [
       </div>
     </div>
   </section>
+
+  <!-- Supabase Connection Test
+  <section class="section-padding bg-base-200">
+    <div class="container-brand">
+      <h2 class="text-3xl font-bold text-center mb-8">Database Connection</h2>
+      <div class="flex justify-center">
+        <SupabaseTest client:load />
+      </div>
+    </div>
+  </section> -->
 
   <!-- Featured Minerals -->
   <section class="section-padding">
