@@ -2,45 +2,17 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import MineralCard from '../components/MineralCard.astro';
 import Hero from '../components/Hero.astro';
+import { getMinerals } from '../lib/database';
 
-const minerals = [
-  {
-    name: 'Quartz',
-    info: 'Quartz is a hard, crystalline mineral composed of silicon and oxygen atoms.',
-    category: 'Silicate',
-    slug: 'quartz',
-  },
-  {
-    name: 'Feldspar',
-    info: 'Feldspar is a group of rock-forming tectosilicate minerals.',
-    category: 'Silicate',
-    slug: 'feldspar',
-  },
-  {
-    name: 'Mica',
-    info: 'Mica is a group of sheet silicate minerals.',
-    category: 'Silicate',
-    slug: 'mica',
-  },
-  {
-    name: 'Pyrite',
-    info: "Pyrite, also known as fool's gold, is an iron sulfide mineral with a metallic luster.",
-    category: 'Sulfide',
-    slug: 'pyrite',
-  },
-  {
-    name: 'Amethyst',
-    info: 'Amethyst is a purple variety of quartz often used as a gemstone.',
-    category: 'Silicate',
-    slug: 'amethyst',
-  },
-  {
-    name: 'Calcite',
-    info: 'Calcite is a carbonate mineral and the most stable polymorph of calcium carbonate.',
-    category: 'Carbonate',
-    slug: 'calcite',
-  },
-];
+// Fetch minerals from Supabase
+let minerals = [];
+try {
+  minerals = await getMinerals();
+} catch (error) {
+  console.error('Error fetching minerals from database:', error);
+  // Fallback to empty array if database fails
+  minerals = [];
+}
 ---
 
 <BaseLayout title="Mineral Collection" description="Browse our extensive collection of minerals">
@@ -53,7 +25,7 @@ const minerals = [
   <section class="section-padding">
     <div class="container-brand">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {minerals.map((mineral) => <MineralCard name={mineral.name} info={mineral.info} link={`/mineral/${mineral.slug}`} />)}
+        {minerals.map((mineral) => <MineralCard name={mineral.title} info={mineral.description} link={`/mineral/${mineral.id}`} />)}
       </div>
     </div>
   </section>
