@@ -74,9 +74,7 @@ if (!mineral) {
                   <i class="fas fa-info-circle mr-2"></i>
                   About {mineral.title}
                 </h2>
-                <p class="text-base-content/80 leading-relaxed text-lg">
-                  {mineral.description}
-                </p>
+                <div class="text-base-content/80 leading-relaxed text-lg" set:html={mineral.description} />
               </div>
             </div>
 
