@@ -26,7 +26,7 @@ const href = link || `/mineral/${name.toLowerCase().replace(/\s+/g, '-')}`;
       {name}
       <div class="badge badge-secondary badge-sm">Mineral</div>
     </h2>
-    <p class="text-base-content/80 leading-relaxed">{info}</p>
+    <div class="text-base-content/80 leading-relaxed line-clamp-3 prose prose-sm max-w-none" set:html={info} />
     <div class="card-actions justify-end mt-6">
       <a href={href} class="btn btn-primary btn-sm hover:btn-primary-focus">
         Learn More
