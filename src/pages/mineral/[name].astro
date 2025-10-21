@@ -7,9 +7,9 @@ export async function getStaticPaths() {
   try {
     // Fetch minerals from database
     const minerals = await getMinerals();
-    
+
     return minerals.map((mineral) => ({
-      params: { name: mineral.id },
+      params: { name: mineral.slug },
       props: { mineral },
     }));
   } catch (error) {
@@ -89,14 +89,8 @@ if (!mineral) {
                   <div class="flex justify-between items-start">
                     <span class="font-medium">Classification:</span>
                     <div class="text-right">
-                      {Array.isArray(mineral.tags) ? (
-                        <div class="flex flex-wrap gap-1 justify-end">
-                          {mineral.tags.map((tag) => (
-                            <span class="badge badge-outline badge-sm">{tag}</span>
-                          ))}
-                        </div>
-                      ) : mineral.tags ? (
-                        <span class="badge badge-outline badge-sm">{mineral.tags}</span>
+                      {mineral.category ? (
+                        <span class="badge badge-outline badge-sm">{mineral.category}</span>
                       ) : (
                         <span class="text-base-content/60">Not specified</span>
                       )}
@@ -107,7 +101,7 @@ if (!mineral) {
                     <span class={`badge ${
                       mineral.status === 'published' ? 'badge-success' :
                       mineral.status === 'draft' ? 'badge-warning' :
-                      mineral.status === 'hidden' ? 'badge-error' :
+                      mineral.status === 'archived' ? 'badge-error' :
                       'badge-neutral'
                     }`}>
                       {mineral.status || 'Unknown'}
