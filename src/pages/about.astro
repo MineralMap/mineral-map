@@ -1,27 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
+import { getStaff } from '../lib/database';
 
-const teamMembers = [
-  {
-    name: 'Dr. Sarah Johnson',
-    role: 'Museum Director',
-    image: '/apple-touch-icon.png',
-    bio: 'Leading our museum for over 15 years with expertise in mineralogy.',
-  },
-  {
-    name: 'Prof. Michael Chen',
-    role: 'Chief Curator',
-    image: '/apple-touch-icon.png',
-    bio: 'Specializing in rare mineral specimens and geological formations.',
-  },
-  {
-    name: 'Emily Rodriguez',
-    role: 'Education Coordinator',
-    image: '/apple-touch-icon.png',
-    bio: 'Developing engaging educational programs for all age groups.',
-  },
-];
+// Get staff from Supabase
+const teamMembers = await getStaff();
 
 const milestones = [
   {
@@ -86,7 +69,7 @@ const milestones = [
                   <i class="fas fa-check-circle text-primary" />
                 </div>
                 <div
-                  class={`timeline-${index % 2 === 0 ? 'start' : 'end'} mb-10 ${index % 2 === 0 ? 'md:text-end' : ''}`}
+                  class={`timeline-${index % 2 === 0 ? 'start' : 'end'} mb-10 ${index % 2 === 0 ? 'md:text-end md:pr-8' : 'md:pl-8'}`}
                 >
                   <time class="font-mono italic text-primary font-bold">{milestone.year}</time>
                   <div class="text-lg font-black">{milestone.event}</div>
@@ -112,14 +95,13 @@ const milestones = [
               <figure class="px-10 pt-10">
                 <div class="avatar">
                   <div class="w-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                    <img src={member.image} alt={member.name} />
+                    <img src={member.image || '/apple-touch-icon.png'} alt={member.title} />
                   </div>
                 </div>
               </figure>
               <div class="card-body items-center text-center">
-                <h3 class="card-title">{member.name}</h3>
-                <p class="text-sm text-primary font-semibold">{member.role}</p>
-                <p class="text-base-content/70">{member.bio}</p>
+                <h3 class="card-title">{member.title}</h3>
+                <p class="text-base-content/70">{member.description || ''}</p>
               </div>
             </div>
           ))
@@ -168,16 +150,16 @@ const milestones = [
           <div class="space-y-4">
             <p class="flex items-center justify-center gap-2">
               <i class="fas fa-map-marker-alt text-primary"></i>
-              <span>3201 Burton St SE, Grand Rapids, MI 49546</span>
+              <span>North Hall 162, 1740 Knollcrest Circle SE, Grand Rapids, MI 49546-4403</span>
             </p>
             <p class="flex items-center justify-center gap-2">
-              <i class="fas fa-phone text-primary"></i>
-              <span>(616) 526-6000</span>
+              <i class="fas fa-clock text-primary"></i>
+              <span>August 29-December 11 (except university holidays)</span>
             </p>
-            <p class="flex items-center justify-center gap-2">
-              <i class="fas fa-envelope text-primary"></i>
-              <span>info@mineralmap.com</span>
-            </p>
+            <div class="text-sm">
+              <p>Monday-Thursday: 12-5 PM</p>
+              <p>Friday: 12-4 PM</p>
+            </div>
           </div>
           <div class="flex flex-col sm:flex-row gap-3 justify-center mt-6">
             <a href="/help" class="btn btn-primary w-full sm:w-auto">Get Directions</a>

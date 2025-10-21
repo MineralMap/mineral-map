@@ -94,3 +94,85 @@ export async function getFeaturedMinerals(): Promise<Mineral[]> {
 
   return data || []
 }
+
+// Get most recent minerals (3 most recent additions)
+export async function getRecentMinerals(limit: number = 3): Promise<Mineral[]> {
+  const { data, error } = await supabase
+    .from('minerals')
+    .select('*')
+    .eq('status', 'published')
+    .order('created_at', { ascending: false })
+    .limit(limit)
+
+  if (error) {
+    console.error('Error fetching recent minerals:', error)
+    return []
+  }
+
+  return data || []
+}
+
+// Get count of all published minerals
+export async function getMineralsCount(): Promise<number> {
+  const { count, error } = await supabase
+    .from('minerals')
+    .select('*', { count: 'exact', head: true })
+    .eq('status', 'published')
+
+  if (error) {
+    console.error('Error counting minerals:', error)
+    return 0
+  }
+
+  return count || 0
+}
+
+// Staff interface
+export interface Staff {
+  id: string
+  title: string
+  description: string | null
+  image: string | null
+  created_at: string
+  updated_at: string
+}
+
+// Get all staff members
+export async function getStaff(): Promise<Staff[]> {
+  const { data, error } = await supabase
+    .from('staff')
+    .select('*')
+    .order('created_at')
+
+  if (error) {
+    console.error('Error fetching staff:', error)
+    return []
+  }
+
+  return data || []
+}
+
+// FAQ interface
+export interface FAQ {
+  id: string
+  question: string
+  answer: string
+  display_order: number
+  created_at: string
+  updated_at: string
+}
+
+// Get all FAQs
+export async function getFAQs(): Promise<FAQ[]> {
+  const { data, error } = await supabase
+    .from('faq')
+    .select('*')
+    .order('display_order')
+
+  if (error) {
+    console.error('Error fetching FAQs:', error)
+    return []
+  }
+
+  return data || []
+}

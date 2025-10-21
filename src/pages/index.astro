@@ -3,24 +3,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import MineralCard from '../components/MineralCard.astro';
 import SupabaseTest from '../components/SupabaseTest.tsx';
+import { getMineralsCount, getRecentMinerals } from '../lib/database';
 
-const featuredMinerals = [
-  {
-    name: 'Quartz',
-    info: 'Quartz is a hard, crystalline mineral composed of silicon and oxygen atoms.',
-  },
-  {
-    name: 'Pyrite',
-    info: "Pyrite, also known as fool's gold, is an iron sulfide mineral with a metallic luster.",
-  },
-  { name: 'Amethyst', info: 'Amethyst is a purple variety of quartz often used as a gemstone.' },
-];
+// Get live data from Supabase
+const mineralsCount = await getMineralsCount();
+const recentMinerals = await getRecentMinerals(3);
 
 const stats = [
-  { label: 'Minerals', value: '500+' },
-  { label: 'Exhibits', value: '12' },
-  { label: 'Years of History', value: '147' },
-  { label: 'Annual Visitors', value: '10K+' },
+  { label: 'Minerals', value: mineralsCount.toString() },
 ];
 ---
 
@@ -66,7 +56,12 @@ const stats = [
     <div class="container-brand">
       <h2 class="text-3xl font-bold text-center mb-12">Featured Minerals</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {featuredMinerals.map((mineral) => <MineralCard name={mineral.name} info={mineral.info} />)}
+        {recentMinerals.map((mineral) => (
+          <MineralCard
+            name={mineral.title}
+            info={mineral.description || 'No description available'}
+          />
+        ))}
       </div>
       <div class="text-center mt-12">
         <a href="/minerals" class="btn btn-outline btn-primary">
