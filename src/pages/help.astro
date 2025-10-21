@@ -1,10 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import { getFAQs } from '../lib/database';
-
-// Get FAQs from Supabase
-const faqs = await getFAQs();
+import FAQListData from '../components/FAQListData.tsx';
 
 const quickLinks = [
   {
@@ -63,25 +60,7 @@ const quickLinks = [
     </div>
   </section>
 
-  <!-- FAQ Section -->
-  <section class="section-padding">
-    <div class="container-brand">
-      <h2 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
-      <div class="max-w-4xl mx-auto space-y-4">
-        {
-          faqs.map((faq, index) => (
-            <div class="collapse collapse-plus bg-base-200">
-              <input type="radio" name="faq-accordion" checked={index === 0} />
-              <div class="collapse-title text-xl font-medium">{faq.question}</div>
-              <div class="collapse-content">
-                <div class="pt-2 text-base-content/80 prose prose-sm max-w-none" set:html={faq.answer} />
-              </div>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
+  <FAQListData client:load />
 
   <!-- Contact Section -->
   <section class="section-padding bg-base-200">

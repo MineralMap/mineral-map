@@ -1,10 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import { getStaff } from '../lib/database';
-
-// Get staff from Supabase
-const teamMembers = await getStaff();
+import StaffListData from '../components/StaffListData.tsx';
 
 const milestones = [
   {
@@ -88,25 +85,7 @@ const milestones = [
   <section class="section-padding">
     <div class="container-brand">
       <h2 class="text-3xl font-bold text-center mb-12">Meet Our Team</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-        {
-          teamMembers.map((member) => (
-            <div class="card bg-base-100 shadow-xl">
-              <figure class="px-10 pt-10">
-                <div class="avatar">
-                  <div class="w-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                    <img src={member.image || '/apple-touch-icon.png'} alt={member.title} />
-                  </div>
-                </div>
-              </figure>
-              <div class="card-body items-center text-center">
-                <h3 class="card-title">{member.title}</h3>
-                <div class="text-base-content/70 max-h-40 overflow-y-auto prose prose-sm max-w-none" set:html={member.description || ''} />
-              </div>
-            </div>
-          ))
-        }
-      </div>
+      <StaffListData client:load />
     </div>
   </section>
 
