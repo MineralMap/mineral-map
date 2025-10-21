@@ -1,18 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import MineralCard from '../components/MineralCard.astro';
 import Hero from '../components/Hero.astro';
-import { getMinerals } from '../lib/database';
-
-// Fetch minerals from Supabase
-let minerals = [];
-try {
-  minerals = await getMinerals();
-} catch (error) {
-  console.error('Error fetching minerals from database:', error);
-  // Fallback to empty array if database fails
-  minerals = [];
-}
+import MineralsListData from '../components/MineralsListData.tsx';
 ---
 
 <BaseLayout title="Mineral Collection" description="Browse our extensive collection of minerals">
@@ -21,12 +10,5 @@ try {
     subtitle="Discover our extensive collection of minerals from around the world"
   />
 
-  <!-- Minerals Grid -->
-  <section class="section-padding">
-    <div class="container-brand">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {minerals.map((mineral) => <MineralCard name={mineral.title} info={mineral.description} link={`/mineral/${mineral.slug}`} />)}
-      </div>
-    </div>
-  </section>
+  <MineralsListData client:load />
 </BaseLayout>

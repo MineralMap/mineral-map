@@ -1,17 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import MineralCard from '../components/MineralCard.astro';
-import SupabaseTest from '../components/SupabaseTest.tsx';
-import { getMineralsCount, getRecentMinerals } from '../lib/database';
-
-// Get live data from Supabase
-const mineralsCount = await getMineralsCount();
-const recentMinerals = await getRecentMinerals(3);
-
-const stats = [
-  { label: 'Minerals', value: mineralsCount.toString() },
-];
+import HomePageData from '../components/HomePageData.tsx';
 ---
 
 <BaseLayout title="Home" description="Explore the wonders of the Mineral Map collection">
@@ -25,50 +15,5 @@ const stats = [
     </div>
   </Hero>
 
-  <!-- Stats Section -->
-  <section class="section-padding bg-base-200">
-    <div class="container-brand">
-      <div class="stats stats-vertical lg:stats-horizontal shadow w-full">
-        {
-          stats.map((stat) => (
-            <div class="stat text-center">
-              <div class="stat-title">{stat.label}</div>
-              <div class="stat-value text-primary">{stat.value}</div>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <!-- Supabase Connection Test
-  <section class="section-padding bg-base-200">
-    <div class="container-brand">
-      <h2 class="text-3xl font-bold text-center mb-8">Database Connection</h2>
-      <div class="flex justify-center">
-        <SupabaseTest client:load />
-      </div>
-    </div>
-  </section> -->
-
-  <!-- Featured Minerals -->
-  <section class="section-padding">
-    <div class="container-brand">
-      <h2 class="text-3xl font-bold text-center mb-12">Featured Minerals</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {recentMinerals.map((mineral) => (
-          <MineralCard
-            name={mineral.title}
-            info={mineral.description || 'No description available'}
-          />
-        ))}
-      </div>
-      <div class="text-center mt-12">
-        <a href="/minerals" class="btn btn-outline btn-primary">
-          View All Minerals
-          <i class="fas fa-chevron-right ml-1"></i>
-        </a>
-      </div>
-    </div>
-  </section>
+  <HomePageData client:load />
 </BaseLayout>
