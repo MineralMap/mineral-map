@@ -20,10 +20,12 @@ export default function MineralsListData() {
   const fetchMinerals = async () => {
     try {
       setState((prev) => ({ ...prev, status: 'loading' }))
-      const minerals = await getMinerals()
+      const allMinerals = await getMinerals()
+      // Filter to only show published minerals
+      const publishedMinerals = allMinerals.filter(m => m.status === 'published')
       setState({
         status: 'success',
-        minerals,
+        minerals: publishedMinerals,
       })
     } catch (err) {
       setState({
