@@ -8,11 +8,17 @@ import { supabase } from './supabase'
 export interface Mineral {
   id: string
   title: string
-  description: string
-  status?: string
-  tags?: string | string[] // Can be a single string or array of strings
-  // Add other fields as needed
-  [key: string]: any
+  slug: string
+  description: string | null
+  category: string | null
+  video_url: string | null
+  meta_title: string | null
+  meta_description: string | null
+  images: any[] // JSONB array of image objects
+  status: 'draft' | 'published' | 'archived' | null
+  color: string | null
+  created_at: string
+  updated_at: string
 }
 
 // Get all minerals from the minerals table
@@ -40,6 +46,22 @@ export async function getMineralById(id: string): Promise<Mineral | null> {
 
   if (error) {
     console.error('Error fetching mineral:', error)
+    throw error
+  }
+
+  return data
+}
+
+// Get a specific mineral by slug
+export async function getMineralBySlug(slug: string): Promise<Mineral | null> {
+  const { data, error } = await supabase
+    .from('minerals')
+    .select('*')
+    .eq('slug', slug)
+    .single()
+
+  if (error) {
+    console.error('Error fetching mineral by slug:', error)
     throw error
   }
 
@@ -175,4 +197,45 @@ export async function getFAQs(): Promise<FAQ[]> {
   }
 
   return data || []
+}
+
+// Category interface
+export interface Category {
+  id: string
+  name: string
+  description: string | null
+  color: string
+  created_at: string
+  updated_at: string
+}
+
+// Get all categories
+export async function getCategories(): Promise<Category[]> {
+  const { data, error } = await supabase
+    .from('categories')
+    .select('*')
+    .order('name')
+
+  if (error) {
+    console.error('Error fetching categories:', error)
+    return []
+  }
+
+  return data || []
+}
+
+// Get a specific category by name
+export async function getCategoryByName(name: string): Promise<Category | null> {
+  const { data, error } = await supabase
+    .from('categories')
+    .select('*')
+    .eq('name', name)
+    .single()
+
+  if (error) {
+    console.error('Error fetching category:', error)
+    return null
+  }
+
+  return data
 }

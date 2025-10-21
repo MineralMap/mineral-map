@@ -31,7 +31,7 @@ export default function SupabaseTest() {
 
       const { data, error, count } = await supabase
         .from('minerals')
-        .select('title, description, status, tags', { count: 'exact' })
+        .select('title, description, status, category', { count: 'exact' })
         .limit(5)
 
       if (error) {

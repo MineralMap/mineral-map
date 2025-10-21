@@ -25,7 +25,7 @@ try {
   <section class="section-padding">
     <div class="container-brand">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {minerals.map((mineral) => <MineralCard name={mineral.title} info={mineral.description} link={`/mineral/${mineral.id}`} />)}
+        {minerals.map((mineral) => <MineralCard name={mineral.title} info={mineral.description} link={`/mineral/${mineral.slug}`} />)}
       </div>
     </div>
   </section>

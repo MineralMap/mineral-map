@@ -101,7 +101,7 @@ const milestones = [
               </figure>
               <div class="card-body items-center text-center">
                 <h3 class="card-title">{member.title}</h3>
-                <p class="text-base-content/70">{member.description || ''}</p>
+                <div class="text-base-content/70 max-h-40 overflow-y-auto prose prose-sm max-w-none" set:html={member.description || ''} />
               </div>
             </div>
           ))
