@@ -16,6 +16,7 @@ export interface Mineral {
   meta_description: string | null
   images: any[] // JSONB array of image objects
   status: 'draft' | 'published' | 'archived' | null
+  featured: boolean | null
   color: string | null
   created_at: string
   updated_at: string
@@ -100,14 +101,15 @@ export async function getMineralsByCategory(category: string): Promise<Mineral[]
   return data || []
 }
 
-// Get featured minerals (if you have a featured column)
+// Get featured minerals (max 3 featured minerals for homepage)
 export async function getFeaturedMinerals(): Promise<Mineral[]> {
   const { data, error } = await supabase
     .from('minerals')
     .select('*')
     .eq('featured', true)
+    .eq('status', 'published')
     .order('title')
-    .limit(6)
+    .limit(3)
 
   if (error) {
     console.error('Error fetching featured minerals:', error)

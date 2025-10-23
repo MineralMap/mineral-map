@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { getMineralsCount, getRecentMinerals, type Mineral } from '../lib/database'
+import { getMineralsCount, getFeaturedMinerals, type Mineral } from '../lib/database'
 
 interface HomePageState {
   status: 'loading' | 'success' | 'error'
   mineralsCount: number
-  recentMinerals: Mineral[]
+  featuredMinerals: Mineral[]
   error?: string
 }
 
@@ -12,7 +12,7 @@ export default function HomePageData() {
   const [state, setState] = useState<HomePageState>({
     status: 'loading',
     mineralsCount: 0,
-    recentMinerals: [],
+    featuredMinerals: [],
   })
 
   useEffect(() => {
@@ -23,22 +23,22 @@ export default function HomePageData() {
     try {
       setState((prev) => ({ ...prev, status: 'loading' }))
 
-      // Fetch both mineral count and recent minerals concurrently
-      const [count, recent] = await Promise.all([
+      // Fetch both mineral count and featured minerals concurrently
+      const [count, featured] = await Promise.all([
         getMineralsCount(),
-        getRecentMinerals(3),
+        getFeaturedMinerals(),
       ])
 
       setState({
         status: 'success',
         mineralsCount: count,
-        recentMinerals: recent,
+        featuredMinerals: featured,
       })
     } catch (err) {
       setState({
         status: 'error',
         mineralsCount: 0,
-        recentMinerals: [],
+        featuredMinerals: [],
         error: err instanceof Error ? err.message : 'Failed to load data',
       })
     }
@@ -92,8 +92,14 @@ export default function HomePageData() {
       <section className="section-padding">
         <div className="container-brand">
           <h2 className="text-3xl font-bold text-center mb-12">Featured Minerals</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {state.recentMinerals.map((mineral) => (
+          {state.featuredMinerals.length === 0 ? (
+            <div className="text-center text-base-content/60 py-12">
+              <p className="text-lg">No featured minerals at this time.</p>
+              <p className="text-sm mt-2">Check back soon for new featured content!</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {state.featuredMinerals.map((mineral) => (
               <div
                 key={mineral.id}
                 className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
@@ -119,8 +125,9 @@ export default function HomePageData() {
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
           <div className="text-center mt-12">
             <a href="/minerals" className="btn btn-outline btn-primary">
               View All Minerals
