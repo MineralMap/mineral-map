@@ -85,13 +85,28 @@ export async function searchMinerals(searchTerm: string): Promise<Mineral[]> {
   return data || []
 }
 
-// Get minerals by category (if you have a category column)
-export async function getMineralsByCategory(category: string): Promise<Mineral[]> {
-  const { data, error } = await supabase
+// Get minerals by category (with optional limit and exclude ID for related minerals)
+export async function getMineralsByCategory(
+  category: string,
+  limit?: number,
+  excludeId?: string
+): Promise<Mineral[]> {
+  let query = supabase
     .from('minerals')
     .select('*')
     .eq('category', category)
+    .eq('status', 'published')
     .order('title')
+
+  if (excludeId) {
+    query = query.neq('id', excludeId)
+  }
+
+  if (limit) {
+    query = query.limit(limit)
+  }
+
+  const { data, error } = await query
 
   if (error) {
     console.error('Error fetching minerals by category:', error)
