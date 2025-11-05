@@ -3,28 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import StaffListData from '../components/StaffListData.tsx';
 
-const milestones = [
-  {
-    year: '1876',
-    event: 'Collection Founded',
-    description: 'Mineral Map establishes its first mineral collection.',
-  },
-  {
-    year: '1925',
-    event: 'Major Expansion',
-    description: 'Collection expands to include over 1,000 specimens.',
-  },
-  {
-    year: '1987',
-    event: 'Modern Facility',
-    description: 'Move to current state-of-the-art facility.',
-  },
-  {
-    year: '2020',
-    event: 'Digital Initiative',
-    description: 'Launch of interactive digital exhibits and virtual tours.',
-  },
-];
+// Bruce Dice Collection narrative content is now embedded directly in the HTML
 ---
 
 <BaseLayout title="About Us" description="Learn about the Mineral Map collection">
@@ -52,31 +31,68 @@ const milestones = [
     </div>
   </section>
 
-  <!-- History Timeline -->
+  <!-- History - The Bruce Dice Collection -->
   <section class="section-padding bg-base-200">
     <div class="container-brand">
-      <h2 class="text-3xl font-bold text-center mb-12">Our History</h2>
+      <h2 class="text-3xl font-bold text-center mb-12">The Bruce Dice Collection</h2>
       <div class="max-w-4xl mx-auto">
-        <ul class="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
-          {
-            milestones.map((milestone, index) => (
-              <li>
-                {index > 0 && <hr />}
-                <div class="timeline-middle">
-                  <i class="fas fa-check-circle text-primary" />
-                </div>
-                <div
-                  class={`timeline-${index % 2 === 0 ? 'start' : 'end'} mb-10 ${index % 2 === 0 ? 'md:text-end md:pr-8' : 'md:pl-8'}`}
-                >
-                  <time class="font-mono italic text-primary font-bold">{milestone.year}</time>
-                  <div class="text-lg font-black">{milestone.event}</div>
-                  <p class="text-base-content/80">{milestone.description}</p>
-                </div>
-                {index < milestones.length - 1 && <hr />}
-              </li>
-            ))
-          }
-        </ul>
+        <div class="prose prose-lg max-w-none">
+          <div class="card bg-base-100 shadow-xl mb-6">
+            <div class="card-body">
+              <p class="text-lg leading-relaxed">
+                Bruce Dice, a 1948 Calvin alumnus and geologist from Houston, Texas, was an avid rock and
+                mineral collector for as long as he could remember. From childhood digging in his backyard,
+                to spelunking in mines in New Zealand and Mexico, Dice practiced the art of mineral collecting.
+              </p>
+            </div>
+          </div>
+
+          <div class="card bg-base-100 shadow-xl mb-6">
+            <div class="card-body">
+              <h3 class="text-xl font-bold text-primary mb-3">A Lifelong Passion</h3>
+              <p class="text-lg leading-relaxed">
+                During his last 4 decades, Dice invested considerable time and effort into improving his
+                exquisite collection. World-wide travels provided him opportunities to acquire rare and
+                valuable samples. One of his favorite minerals on display is a sample of crocoite, an unusual
+                and rare lead chromate (PbCrO₄) which forms into red, tabular crystals. The museum's specimen
+                was obtained from a small, family-owned mine in Australia.
+              </p>
+              <p class="text-lg leading-relaxed mt-4">
+                Through the years Dice worked to improve the variety and quality of minerals in the collection.
+                Recent purchases included a suite of stunning fluorescent specimens from Franklin, New Jersey,
+                and a fascinating collection of fossil fish from Lebanon.
+              </p>
+            </div>
+          </div>
+
+          <div class="card bg-base-100 shadow-xl mb-6">
+            <div class="card-body">
+              <h3 class="text-xl font-bold text-primary mb-3">A Gift to Calvin</h3>
+              <p class="text-lg leading-relaxed">
+                After many years of building a personal collection, Bruce Dice felt something was missing:
+                "I decided it was time to share … so [the collection] went to the love of my life — Calvin College."
+                A short time later, his mineral collection was delivered to professional museum staff for mounting,
+                photographing, appraisal and documentation.
+              </p>
+              <p class="text-lg leading-relaxed mt-4">
+                Back at Calvin, faculty, staff, and students were enthusiastic when construction broke ground
+                in March of 2012. A new addition to North Hall was erected, and over 300 mineral, meteorite,
+                and fossil specimens were relocated to their new home on Calvin's campus.
+              </p>
+            </div>
+          </div>
+
+          <div class="card bg-primary text-primary-content shadow-xl">
+            <div class="card-body">
+              <p class="text-lg leading-relaxed">
+                Both Dice and those at Calvin University agree that the collection is a magnificent way to
+                marvel at God's creation. The museum continues to change through the years as new specimens
+                are displayed from acquisitions and storage, thereby offering fresh displays of God's
+                handiwork to be enjoyed time and again.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>

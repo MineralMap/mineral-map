@@ -74,7 +74,7 @@ export default function StaffListData() {
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
       {state.staff.map((member) => (
         <div key={member.id} className="card bg-base-100 shadow-xl">
-          <figure className="px-10 pt-10">
+          <figure className="p-10">
             <div className="avatar">
               <div className="w-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                 <img src={member.image || '/apple-touch-icon.png'} alt={member.title} />
